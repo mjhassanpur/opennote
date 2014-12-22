@@ -2,6 +2,7 @@ package com.github.mjhassanpur.opennote;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.util.Log;
+
+import java.util.List;
 
 
 public class NoteFragment extends Fragment {
@@ -24,6 +28,10 @@ public class NoteFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private TextView tv;
+    private EditText et;
+    private NoteDBHelper noteDBHelper;
 
     /**
      * Use this factory method to create a new instance of
@@ -62,9 +70,9 @@ public class NoteFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_note, container, false);
 
-        final TextView tv = (TextView) v.findViewById(R.id.view_note);
+        tv = (TextView) v.findViewById(R.id.view_note);
 
-        final EditText et = (EditText) v.findViewById(R.id.add_note);
+        et = (EditText) v.findViewById(R.id.add_note);
         if (et != null) {
             et.setHorizontallyScrolling(false);
             et.setLines(5);
@@ -75,8 +83,9 @@ public class NoteFragment extends Fragment {
                 int result = actionId & EditorInfo.IME_MASK_ACTION;
                 switch (result) {
                     case EditorInfo.IME_ACTION_DONE:
-                        tv.setText(et.getText().toString());
-                        et.getText().clear();
+                        Note note = new Note();
+                        note.setContent(et.getText().toString());
+                        new AddNoteTask(note).execute();
                         return true;
                 }
                 return false;
@@ -119,6 +128,51 @@ public class NoteFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private class AddNoteTask extends AsyncTask<Void, Void, Void> {
+
+        private Note note;
+
+        public AddNoteTask(Note note) {
+            this.note = note;
+        }
+
+        protected void onPreExecute() {
+            Log.d("MainActivity", "Adding note...");
+        }
+
+        protected Void doInBackground(Void... v) {
+            noteDBHelper = new NoteDBHelper(getActivity());
+            noteDBHelper.createEntry(note);
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            et.getText().clear();
+            new GetNotesTask().execute();
+        }
+    }
+
+    private class GetNotesTask extends AsyncTask<Void, Void, Void> {
+
+        List<Note> notes;
+
+        protected void onPreExecute() {
+            Log.d("MainActivity", "Getting Notes...");
+        }
+
+        protected Void doInBackground(Void... v) {
+            notes = noteDBHelper.getAllEntries();
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            tv.setText(notes.get(0).getId() + ". " + notes.get(0).getContent() + "\n");
+            for (int i = 1; i < notes.size(); ++i) {
+                tv.append(notes.get(i).getId() + ". " + notes.get(i).getContent() + "\n");
+            }
+        }
     }
 
 }
