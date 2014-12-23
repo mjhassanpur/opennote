@@ -1,15 +1,17 @@
 package com.github.mjhassanpur.opennote;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.net.Uri;
+import android.view.View;
+import android.view.View.OnClickListener;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-
-public class MainActivity extends ActionBarActivity implements NoteFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements NoteListFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
 
@@ -24,6 +26,13 @@ public class MainActivity extends ActionBarActivity implements NoteFragment.OnFr
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.normal_plus);
         button.setColorNormalResId(R.color.secondary);
         button.setColorPressedResId(R.color.primary);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, CreateNoteActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

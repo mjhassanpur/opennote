@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.github.mjhassanpur.opennote.NoteFragment">
+    tools:context="com.github.mjhassanpur.opennote.CreateNoteFragment">
 
     <EditText
         android:id="@+id/add_note"
@@ -14,18 +14,6 @@
         android:gravity="start"
         android:textColor="@color/text_color"
         android:textCursorDrawable="@drawable/color_cursor"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
-
-    <TextView
-        android:id="@+id/view_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textColor="@color/text_color"
-        android:textSize="18sp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"

@@ -5,19 +5,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.util.Log;
 
 import java.util.List;
 
 
-public class NoteFragment extends Fragment {
+public class NoteListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +27,6 @@ public class NoteFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private TextView tv;
-    private EditText et;
     private NoteDBHelper noteDBHelper;
 
     /**
@@ -39,11 +35,11 @@ public class NoteFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NoteFragment.
+     * @return A new instance of fragment NoteListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NoteFragment newInstance(String param1, String param2) {
-        NoteFragment fragment = new NoteFragment();
+    public static NoteListFragment newInstance(String param1, String param2) {
+        NoteListFragment fragment = new NoteListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -51,7 +47,7 @@ public class NoteFragment extends Fragment {
         return fragment;
     }
 
-    public NoteFragment() {
+    public NoteListFragment() {
         // Required empty public constructor
     }
 
@@ -62,36 +58,15 @@ public class NoteFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        new GetNotesTask().execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_note, container, false);
-
+        View v = inflater.inflate(R.layout.fragment_note_list, container, false);
         tv = (TextView) v.findViewById(R.id.view_note);
-
-        et = (EditText) v.findViewById(R.id.add_note);
-        if (et != null) {
-            et.setHorizontallyScrolling(false);
-            et.setLines(5);
-        }
-        et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-                int result = actionId & EditorInfo.IME_MASK_ACTION;
-                switch (result) {
-                    case EditorInfo.IME_ACTION_DONE:
-                        Note note = new Note();
-                        note.setContent(et.getText().toString());
-                        new AddNoteTask(note).execute();
-                        return true;
-                }
-                return false;
-            }
-        });
-
         return v;
     }
 
@@ -130,39 +105,16 @@ public class NoteFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    private class AddNoteTask extends AsyncTask<Void, Void, Void> {
-
-        private Note note;
-
-        public AddNoteTask(Note note) {
-            this.note = note;
-        }
-
-        protected void onPreExecute() {
-            Log.d("MainActivity", "Adding note...");
-        }
-
-        protected Void doInBackground(Void... v) {
-            noteDBHelper = new NoteDBHelper(getActivity());
-            noteDBHelper.createEntry(note);
-            return null;
-        }
-
-        protected void onPostExecute(Void v) {
-            et.getText().clear();
-            new GetNotesTask().execute();
-        }
-    }
-
     private class GetNotesTask extends AsyncTask<Void, Void, Void> {
 
         List<Note> notes;
 
         protected void onPreExecute() {
-            Log.d("MainActivity", "Getting Notes...");
+            Log.d("CreateNoteActivity", "Getting Notes...");
         }
 
         protected Void doInBackground(Void... v) {
+            noteDBHelper = new NoteDBHelper(getActivity());
             notes = noteDBHelper.getAllEntries();
             return null;
         }

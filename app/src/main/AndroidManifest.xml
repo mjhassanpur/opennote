@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateNoteActivity"
+            android:label="Create note"
+            android:parentActivityName="com.github.mjhassanpur.opennote.MainActivity">
+        </activity>
     </application>
 
 </manifest>
