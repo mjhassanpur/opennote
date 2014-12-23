@@ -27,7 +27,8 @@ public class CreateNoteFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private EditText et;
+    private EditText editTitle;
+    private EditText editContent;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,19 +67,22 @@ public class CreateNoteFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_create_note, container, false);
 
-        et = (EditText) v.findViewById(R.id.add_note);
-        if (et != null) {
-            et.setHorizontallyScrolling(false);
-            et.setLines(5);
+        editTitle = (EditText) v.findViewById(R.id.add_note_title);
+
+        editContent = (EditText) v.findViewById(R.id.add_note_content);
+        if (editContent != null) {
+            editContent.setHorizontallyScrolling(false);
+            editContent.setLines(5);
         }
-        et.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        editContent.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 int result = actionId & EditorInfo.IME_MASK_ACTION;
                 switch (result) {
                     case EditorInfo.IME_ACTION_DONE:
                         Note note = new Note();
-                        note.setContent(et.getText().toString());
+                        note.setTitle(editTitle.getText().toString());
+                        note.setContent(editContent.getText().toString());
                         new AddNoteTask(note).execute();
                         return true;
                 }
@@ -143,7 +147,8 @@ public class CreateNoteFragment extends Fragment {
         }
 
         protected void onPostExecute(Void v) {
-            et.getText().clear();
+            editTitle.getText().clear();
+            editContent.getText().clear();
         }
     }
 

@@ -22,7 +22,6 @@ public class CreateNoteActivity extends ActionBarActivity implements CreateNoteF
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_create_note, menu);

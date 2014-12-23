@@ -14,13 +14,14 @@ import com.github.mjhassanpur.opennote.NoteDBContract.NoteEntry;
 
 public class NoteDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "note.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_NOTE_ENTRIES =
             "CREATE TABLE " + NoteEntry.TABLE_NAME + " (" +
                     NoteEntry.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    NoteEntry.KEY_TITLE + TEXT_TYPE + COMMA_SEP +
                     NoteEntry.KEY_CONTENT + TEXT_TYPE +
             ")";
 
@@ -46,6 +47,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(NoteEntry.KEY_TITLE, note.getTitle());
         values.put(NoteEntry.KEY_CONTENT, note.getContent());
 
         db.insert(NoteEntry.TABLE_NAME,
@@ -76,7 +78,8 @@ public class NoteDBHelper extends SQLiteOpenHelper {
             do {
                 note = new Note();
                 note.setId(Integer.parseInt(cursor.getString(0)));
-                note.setContent(cursor.getString(1));
+                note.setTitle(cursor.getString(1));
+                note.setContent(cursor.getString(2));
                 notes.add(note);
             } while (cursor.moveToNext());
         }

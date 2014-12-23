@@ -110,7 +110,7 @@ public class NoteListFragment extends Fragment {
         List<Note> notes;
 
         protected void onPreExecute() {
-            Log.d("CreateNoteActivity", "Getting Notes...");
+            Log.d("MainActivity", "Getting Notes...");
         }
 
         protected Void doInBackground(Void... v) {
@@ -120,9 +120,9 @@ public class NoteListFragment extends Fragment {
         }
 
         protected void onPostExecute(Void v) {
-            tv.setText(notes.get(0).getId() + ". " + notes.get(0).getContent() + "\n");
+            tv.setText(notes.get(0).getId() + ". Title -" + notes.get(0).getTitle() + " Content: " + notes.get(0).getContent() + "\n");
             for (int i = 1; i < notes.size(); ++i) {
-                tv.append(notes.get(i).getId() + ". " + notes.get(i).getContent() + "\n");
+                tv.append(notes.get(i).getId() + ". Title -" + notes.get(i).getTitle() + " Content: " + notes.get(i).getContent() + "\n");
             }
         }
     }
