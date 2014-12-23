@@ -55,9 +55,18 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteEntry(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(NoteEntry.TABLE_NAME,
+                NoteEntry.KEY_ID + " = ?",
+                new String[] { String.valueOf(note.getId()) });
+
+        db.close();
+    }
+
     public List<Note> getAllEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT  * FROM " + NoteEntry.TABLE_NAME;
+        String query = "SELECT * FROM " + NoteEntry.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
 
         List<Note> notes = new LinkedList<Note>();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.net.Uri;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends ActionBarActivity implements NoteFragment.OnFragmentInteractionListener {
@@ -19,6 +20,10 @@ public class MainActivity extends ActionBarActivity implements NoteFragment.OnFr
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.normal_plus);
+        button.setColorNormalResId(R.color.secondary);
+        button.setColorPressedResId(R.color.primary);
     }
 
     @Override
