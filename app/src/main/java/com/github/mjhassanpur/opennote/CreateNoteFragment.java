@@ -1,6 +1,7 @@
 package com.github.mjhassanpur.opennote;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,10 +9,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Button;
 import android.util.Log;
 
 
@@ -29,6 +28,7 @@ public class CreateNoteFragment extends Fragment {
 
     private EditText editTitle;
     private EditText editContent;
+    private Button button;
 
     /**
      * Use this factory method to create a new instance of
@@ -74,19 +74,15 @@ public class CreateNoteFragment extends Fragment {
             editContent.setHorizontallyScrolling(false);
             editContent.setLines(5);
         }
-        editContent.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+        button = (Button) v.findViewById(R.id.done_button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-                int result = actionId & EditorInfo.IME_MASK_ACTION;
-                switch (result) {
-                    case EditorInfo.IME_ACTION_DONE:
-                        Note note = new Note();
-                        note.setTitle(editTitle.getText().toString());
-                        note.setContent(editContent.getText().toString());
-                        new AddNoteTask(note).execute();
-                        return true;
-                }
-                return false;
+            public void onClick(View v) {
+                Note note = new Note();
+                note.setTitle(editTitle.getText().toString());
+                note.setContent(editContent.getText().toString());
+                new AddNoteTask(note).execute();
             }
         });
 
@@ -149,6 +145,8 @@ public class CreateNoteFragment extends Fragment {
         protected void onPostExecute(Void v) {
             editTitle.getText().clear();
             editContent.getText().clear();
+            Intent i = new Intent(getActivity(), MainActivity.class);
+            startActivity(i);
         }
     }
 
