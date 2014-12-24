@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 public class NoteListAdapter extends ArrayAdapter<Note> {
 
-    public NoteListAdapter(Context context, List<Note> users) {
-        super(context, 0, users);
+    public NoteListAdapter(Context context, List<Note> notes) {
+        super(context, 0, notes);
     }
 
     @Override
@@ -21,9 +21,9 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
         }
         TextView tvTitle = (TextView) convertView.findViewById(R.id.note_title);
-        TextView tvContent = (TextView) convertView.findViewById(R.id.note_content);
+        //TextView tvContent = (TextView) convertView.findViewById(R.id.note_content);
         tvTitle.setText(note.getTitle());
-        tvContent.setText(note.getContent());
+        //tvContent.setText(note.getContent());
         return convertView;
     }
 }
