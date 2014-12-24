@@ -20,6 +20,7 @@ public class CreateNoteActivity extends ActionBarActivity implements CreateNoteF
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_48dp);
     }
 
     @Override

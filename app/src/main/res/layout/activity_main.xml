@@ -20,8 +20,8 @@
 
     </LinearLayout>
 
-    <com.getbase.floatingactionbutton.AddFloatingActionButton
-        android:id="@+id/normal_plus"
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/normal_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

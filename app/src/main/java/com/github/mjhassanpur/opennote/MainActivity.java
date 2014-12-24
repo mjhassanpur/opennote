@@ -23,7 +23,8 @@ public class MainActivity extends ActionBarActivity implements NoteListFragment.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.normal_plus);
+        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.normal_create);
+        button.setIcon(R.drawable.ic_create_white_36dp);
         button.setColorNormalResId(R.color.secondary);
         button.setColorPressedResId(R.color.primary);
         button.setOnClickListener(new OnClickListener() {
