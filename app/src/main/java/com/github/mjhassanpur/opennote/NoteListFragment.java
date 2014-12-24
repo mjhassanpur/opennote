@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class NoteListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TextView tv;
+    private ListView lv;
     private NoteDBHelper noteDBHelper;
 
     /**
@@ -66,7 +66,7 @@ public class NoteListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_note_list, container, false);
-        tv = (TextView) v.findViewById(R.id.view_note);
+        lv = (ListView) v.findViewById(R.id.list_view);
         return v;
     }
 
@@ -120,10 +120,8 @@ public class NoteListFragment extends Fragment {
         }
 
         protected void onPostExecute(Void v) {
-            tv.setText(notes.get(0).getId() + ". Title -" + notes.get(0).getTitle() + " Content: " + notes.get(0).getContent() + "\n");
-            for (int i = 1; i < notes.size(); ++i) {
-                tv.append(notes.get(i).getId() + ". Title -" + notes.get(i).getTitle() + " Content: " + notes.get(i).getContent() + "\n");
-            }
+            NoteListAdapter adapter = new NoteListAdapter(getActivity(), notes);
+            lv.setAdapter(adapter);
         }
     }
 
