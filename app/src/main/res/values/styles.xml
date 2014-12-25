@@ -11,10 +11,15 @@
 
     <style name="AppTheme" parent="AppBaseTheme"></style>
 
-    <style name="Divider">
+    <style name="divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

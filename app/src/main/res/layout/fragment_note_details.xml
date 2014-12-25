@@ -30,7 +30,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/edited"/>
 
-    <View style="@style/Divider"
+    <View style="@style/divider"
         android:id="@+id/divider"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
