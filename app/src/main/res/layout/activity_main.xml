@@ -12,11 +12,12 @@
 
         <include layout="@layout/toolbar"/>
 
-        <fragment android:name="com.github.mjhassanpur.opennote.NoteListFragment"
-            android:id="@+id/note_fragment"
-            android:layout_weight="1"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </FrameLayout>
 
     </LinearLayout>
 
