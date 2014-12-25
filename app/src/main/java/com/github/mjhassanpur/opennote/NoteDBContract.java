@@ -12,5 +12,7 @@ public final class NoteDBContract {
         public static final String KEY_ID = "id";
         public static final String KEY_TITLE = "title";
         public static final String KEY_CONTENT = "content";
+        public static final String KEY_CREATED = "created";
+        public static final String KEY_EDITED = "edited";
     }
 }

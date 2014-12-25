@@ -6,6 +6,7 @@
     <string name="add_note">Add a note…</string>
     <string name="title">Title</string>
     <string name="content">Content</string>
+    <string name="edited">Edited</string>
     <string name="done">DONE</string>
 
 </resources>

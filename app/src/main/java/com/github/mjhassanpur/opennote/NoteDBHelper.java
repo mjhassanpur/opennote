@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -14,15 +15,18 @@ import com.github.mjhassanpur.opennote.NoteDBContract.NoteEntry;
 
 public class NoteDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "note.db";
     private static final String TEXT_TYPE = " TEXT";
+    private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_NOTE_ENTRIES =
             "CREATE TABLE " + NoteEntry.TABLE_NAME + " (" +
                     NoteEntry.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NoteEntry.KEY_TITLE + TEXT_TYPE + COMMA_SEP +
-                    NoteEntry.KEY_CONTENT + TEXT_TYPE +
+                    NoteEntry.KEY_CONTENT + TEXT_TYPE + COMMA_SEP +
+                    NoteEntry.KEY_CREATED + INTEGER_TYPE + COMMA_SEP +
+                    NoteEntry.KEY_EDITED + INTEGER_TYPE +
             ")";
 
     private static final String SQL_DELETE_NOTE_ENTRIES =
@@ -49,6 +53,8 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(NoteEntry.KEY_TITLE, note.getTitle());
         values.put(NoteEntry.KEY_CONTENT, note.getContent());
+        values.put(NoteEntry.KEY_CREATED, note.getCreated().getTime());
+        values.put(NoteEntry.KEY_EDITED, note.getEdited().getTime());
 
         db.insert(NoteEntry.TABLE_NAME,
                 null,
@@ -80,6 +86,8 @@ public class NoteDBHelper extends SQLiteOpenHelper {
                 note.setId(Integer.parseInt(cursor.getString(0)));
                 note.setTitle(cursor.getString(1));
                 note.setContent(cursor.getString(2));
+                note.setCreated(new Date(cursor.getLong(3)));
+                note.setEdited(new Date(cursor.getLong(4)));
                 notes.add(note);
             } while (cursor.moveToNext());
         }

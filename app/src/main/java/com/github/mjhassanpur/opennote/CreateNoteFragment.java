@@ -80,8 +80,14 @@ public class CreateNoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Note note = new Note();
-                note.setTitle(editTitle.getText().toString());
-                note.setContent(editContent.getText().toString());
+                String editTitleText = editTitle.getText().toString();
+                if (editTitleText != null && !editTitleText.isEmpty()) {
+                    note.setTitle(editTitle.getText().toString());
+                }
+                String editContentText = editContent.getText().toString();
+                if (editContentText != null && !editContentText.isEmpty()) {
+                    note.setContent(editContent.getText().toString());
+                }
                 new AddNoteTask(note).execute();
             }
         });

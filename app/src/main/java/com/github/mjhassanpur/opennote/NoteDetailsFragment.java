@@ -9,13 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 
 public class NoteDetailsFragment extends Fragment {
 
     private static final String NOTE_TITLE = "title";
     private static final String NOTE_CONTENT = "content";
+    private static final String NOTE_EDITED = "edited";
     private String mTitle;
     private String mContent;
+    private Long mEdited;
 
     private OnFragmentInteractionListener mListener;
 
@@ -27,11 +32,12 @@ public class NoteDetailsFragment extends Fragment {
      * @param content Note content
      * @return A new instance of fragment NoteDetailsFragment.
      */
-    public static NoteDetailsFragment newInstance(String title, String content) {
+    public static NoteDetailsFragment newInstance(String title, String content, Date edited) {
         NoteDetailsFragment fragment = new NoteDetailsFragment();
         Bundle args = new Bundle();
         args.putString(NOTE_TITLE, title);
         args.putString(NOTE_CONTENT, content);
+        args.putLong(NOTE_EDITED, edited.getTime());
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,6 +52,7 @@ public class NoteDetailsFragment extends Fragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString(NOTE_TITLE);
             mContent = getArguments().getString(NOTE_CONTENT);
+            mEdited = getArguments().getLong(NOTE_EDITED);
         }
     }
 
@@ -55,8 +62,12 @@ public class NoteDetailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_note_details, container, false);
         TextView tvTitle = (TextView) v.findViewById(R.id.title);
         TextView tvContent = (TextView) v.findViewById(R.id.content);
+        TextView tvEdited = (TextView) v.findViewById(R.id.edited);
         tvTitle.setText(mTitle);
         tvContent.setText(mContent);
+        Date date = new Date(mEdited);
+        DateFormat df = DateFormat.getDateTimeInstance();
+        tvEdited.setText(df.format(date));
         return v;
     }
 
