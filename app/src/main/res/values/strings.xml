@@ -4,6 +4,8 @@
     <string name="app_name">OpenNote</string>
     <string name="note">Note</string>
     <string name="action_settings">Settings</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_share">Share</string>
     <string name="add_note">Add a note…</string>
     <string name="edit_note">Edit note…</string>
     <string name="title">Title</string>
