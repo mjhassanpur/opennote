@@ -20,7 +20,7 @@ public class Note {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         df.setTimeZone(TimeZone.getDefault());
         this.title = "Note - " + df.format(this.created);
-        this.content = "Add a note...";
+        this.content = "Nothing...";
     }
 
     public void setId(int id) {

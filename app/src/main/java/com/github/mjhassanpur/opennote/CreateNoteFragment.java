@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Button;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class CreateNoteFragment extends Fragment {
@@ -87,6 +88,12 @@ public class CreateNoteFragment extends Fragment {
                 String editContentText = editContent.getText().toString();
                 if (editContentText != null && !editContentText.isEmpty()) {
                     note.setContent(editContent.getText().toString());
+                } else {
+                    Toast.makeText(getActivity(), "Cannot save an empty note",
+                            Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+                    return;
                 }
                 new AddNoteTask(note).execute();
             }
@@ -149,8 +156,6 @@ public class CreateNoteFragment extends Fragment {
         }
 
         protected void onPostExecute(Void v) {
-            editTitle.getText().clear();
-            editContent.getText().clear();
             Intent i = new Intent(getActivity(), MainActivity.class);
             startActivity(i);
         }

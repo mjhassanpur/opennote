@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Button;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -82,14 +83,25 @@ public class EditNoteFragment extends Fragment {
             public void onClick(View v) {
                 Note note = new Note();
                 note.setId(mId);
-                note.setTitle(editTitle.getText().toString());
-                note.setContent(editContent.getText().toString());
+                String editTitleText = editTitle.getText().toString();
+                if (editTitleText != null && !editTitleText.isEmpty()) {
+                    note.setTitle(editTitle.getText().toString());
+                }
+                String editContentText = editContent.getText().toString();
+                if (editContentText != null && !editContentText.isEmpty()) {
+                    note.setContent(editContent.getText().toString());
+                } else {
+                    note.setContent(mContent);
+                    Toast.makeText(getActivity(), "Cannot save an empty note",
+                            Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+                    return;
+                }
                 noteDBHelper = new NoteDBHelper(getActivity());
                 new UpdateNoteTask(note).execute();
             }
         });
-
-        noteDBHelper = new NoteDBHelper(getActivity());
     }
 
     // TODO: Rename method, update argument and hook method into UI event

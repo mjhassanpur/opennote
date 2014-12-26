@@ -88,7 +88,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /*(public Note getEntry(int id) {
+    public Note getEntry(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + NoteEntry.TABLE_NAME + " WHERE " +
                 NoteEntry.KEY_ID + " = " + id;
@@ -104,7 +104,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         }
 
         return note;
-    }*/
+    }
 
     public List<Note> getAllEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
