@@ -4,33 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.github.mjhassanpur.opennote.CreateNoteFragment">
+    tools:context="com.github.mjhassanpur.opennote.EditNoteFragment">
 
     <EditText
-        android:id="@+id/add_note_title"
+        android:id="@+id/edit_note_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/title"
         android:inputType="textCapWords"
         android:imeOptions="actionDone"
         android:singleLine="true"
         android:gravity="start"
         android:textColor="@color/text_color"
         android:textCursorDrawable="@drawable/color_cursor"
+        android:text="@string/title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"/>
 
     <EditText
-        android:id="@+id/add_note_content"
+        android:id="@+id/edit_note_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/add_note"
         android:inputType="textCapSentences"
         android:gravity="start"
         android:textColor="@color/text_color"
         android:textCursorDrawable="@drawable/color_cursor"
+        android:text="@string/edit_note"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"

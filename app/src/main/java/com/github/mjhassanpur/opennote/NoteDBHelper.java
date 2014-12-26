@@ -63,6 +63,22 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateEntry(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NoteEntry.KEY_TITLE, note.getTitle());
+        values.put(NoteEntry.KEY_CONTENT, note.getContent());
+        values.put(NoteEntry.KEY_EDITED, note.getEdited().getTime());
+
+        db.update(NoteEntry.TABLE_NAME,
+                values,
+                NoteEntry.KEY_ID + " = ?",
+                new String[] { String.valueOf(note.getId()) });
+
+        db.close();
+    }
+
     public void deleteEntry(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(NoteEntry.TABLE_NAME,
@@ -71,6 +87,24 @@ public class NoteDBHelper extends SQLiteOpenHelper {
 
         db.close();
     }
+
+    /*(public Note getEntry(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + NoteEntry.TABLE_NAME + " WHERE " +
+                NoteEntry.KEY_ID + " = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+
+        Note note = new Note();
+        if (cursor.moveToFirst()) {
+            note.setId(Integer.parseInt(cursor.getString(0)));
+            note.setTitle(cursor.getString(1));
+            note.setContent(cursor.getString(2));
+            note.setCreated(new Date(cursor.getLong(3)));
+            note.setEdited(new Date(cursor.getLong(4)));
+        }
+
+        return note;
+    }*/
 
     public List<Note> getAllEntries() {
         SQLiteDatabase db = this.getReadableDatabase();

@@ -19,7 +19,12 @@
         <activity
             android:name=".CreateNoteActivity"
             android:label="Create"
-            android:parentActivityName="com.github.mjhassanpur.opennote.MainActivity">
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".EditNoteActivity"
+            android:label="Edit"
+            android:parentActivityName=".MainActivity" >
         </activity>
     </application>
 

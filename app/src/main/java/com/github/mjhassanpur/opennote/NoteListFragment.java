@@ -1,6 +1,7 @@
 package com.github.mjhassanpur.opennote;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 
@@ -22,6 +25,7 @@ public class NoteListFragment extends Fragment {
     private List<Note> notes;
     private NoteListAdapter adapter;
     private NoteDBHelper noteDBHelper;
+    private FloatingActionButton createNotebutton;
     private OnFragmentInteractionListener mListener;
 
     public static NoteListFragment newInstance() {
@@ -40,6 +44,16 @@ public class NoteListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_note_list, container, false);
         lv = (ListView) v.findViewById(R.id.list_view);
+
+        createNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_create_note);
+        createNotebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), CreateNoteActivity.class);
+                startActivity(i);
+            }
+        });
+
         return v;
     }
 

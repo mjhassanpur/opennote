@@ -13,86 +13,83 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.util.Log;
 
+import java.util.Date;
 
-public class CreateNoteFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class EditNoteFragment extends Fragment {
+
+    private static final String NOTE_ID = "id";
+    private static final String NOTE_TITLE = "title";
+    private static final String NOTE_CONTENT = "content";
+    private int mId;
+    private String mTitle;
+    private String mContent;
 
     private OnFragmentInteractionListener mListener;
 
     private EditText editTitle;
     private EditText editContent;
     private Button button;
+    private NoteDBHelper noteDBHelper;
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * this fragment.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment EditNoteFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static CreateNoteFragment newInstance(String param1, String param2) {
-        CreateNoteFragment fragment = new CreateNoteFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static EditNoteFragment newInstance() {
+        return new EditNoteFragment();
     }
 
-    public CreateNoteFragment() {
-        // Required empty public constructor
-    }
+    public EditNoteFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_create_note, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit_note, container, false);
+        editTitle = (EditText) v.findViewById(R.id.edit_note_title);
+        editContent = (EditText) v.findViewById(R.id.edit_note_content);
+        button = (Button) v.findViewById(R.id.done_button);
+        return v;
+    }
 
-        editTitle = (EditText) v.findViewById(R.id.add_note_title);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        editContent = (EditText) v.findViewById(R.id.add_note_content);
+        Bundle args = ((EditNoteActivity)getActivity()).getArguments();
+        mId = args.getInt(NOTE_ID);
+        mTitle = args.getString(NOTE_TITLE);
+        mContent = args.getString(NOTE_CONTENT);
+
+        editTitle.setText(mTitle);
+        editTitle.setSelection(editTitle.getText().length());
         if (editContent != null) {
             editContent.setHorizontallyScrolling(false);
             editContent.setLines(5);
+            editContent.setText(mContent);
+            editContent.setSelection(editContent.getText().length());
         }
 
-        button = (Button) v.findViewById(R.id.done_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Note note = new Note();
-                String editTitleText = editTitle.getText().toString();
-                if (editTitleText != null && !editTitleText.isEmpty()) {
-                    note.setTitle(editTitle.getText().toString());
-                }
-                String editContentText = editContent.getText().toString();
-                if (editContentText != null && !editContentText.isEmpty()) {
-                    note.setContent(editContent.getText().toString());
-                }
-                new AddNoteTask(note).execute();
+                note.setId(mId);
+                note.setTitle(editTitle.getText().toString());
+                note.setContent(editContent.getText().toString());
+                noteDBHelper = new NoteDBHelper(getActivity());
+                new UpdateNoteTask(note).execute();
             }
         });
 
-        return v;
+        noteDBHelper = new NoteDBHelper(getActivity());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -130,27 +127,25 @@ public class CreateNoteFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    private class AddNoteTask extends AsyncTask<Void, Void, Void> {
+    private class UpdateNoteTask extends AsyncTask<Void, Void, Void> {
 
         private Note note;
 
-        public AddNoteTask(Note note) {
+        public UpdateNoteTask(Note note) {
             this.note = note;
         }
 
         protected void onPreExecute() {
-            Log.d("CreateNoteActivity", "Adding note...");
+            Log.d("EditNoteActivity", "Updating note...");
         }
 
         protected Void doInBackground(Void... v) {
-            NoteDBHelper noteDBHelper = new NoteDBHelper(getActivity());
-            noteDBHelper.createEntry(note);
+            note.setEdited(new Date());
+            noteDBHelper.updateEntry(note);
             return null;
         }
 
         protected void onPostExecute(Void v) {
-            editTitle.getText().clear();
-            editContent.getText().clear();
             Intent i = new Intent(getActivity(), MainActivity.class);
             startActivity(i);
         }

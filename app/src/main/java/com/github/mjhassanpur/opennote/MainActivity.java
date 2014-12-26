@@ -22,9 +22,6 @@ public class MainActivity extends ActionBarActivity implements
     private final static String TAG_NOTE_DETAILS_FRAGMENT = "TAG_NOTE_DETAILS_FRAGMENT";
 
     private Toolbar toolbar;
-    private FloatingActionButton createNotebutton;
-    private FloatingActionButton editNotebutton;
-    private FloatingActionsMenu actionsMenu;
     private NoteListFragment noteListFragment;
     private NoteDetailsFragment noteDetailsFragment;
     private FragmentManager fm;
@@ -36,19 +33,6 @@ public class MainActivity extends ActionBarActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        editNotebutton = (FloatingActionButton) findViewById(R.id.normal_edit_note);
-        editNotebutton.setVisibility(View.GONE);
-
-        createNotebutton = (FloatingActionButton) findViewById(R.id.normal_create_note);
-        createNotebutton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, CreateNoteActivity.class);
-                startActivity(i);
-            }
-        });
-        actionsMenu = ((FloatingActionsMenu) findViewById(R.id.multiple_actions));
 
         fm = getFragmentManager();
         Fragment cFragment = fm.findFragmentById(R.id.container);
@@ -86,19 +70,15 @@ public class MainActivity extends ActionBarActivity implements
     public void setDefaultActionBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setTitle(R.string.app_name);
-        editNotebutton.setVisibility(View.GONE);
-        actionsMenu.setVisibility(View.VISIBLE);
     }
 
     public void setAlternateActionBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.note);
-        actionsMenu.setVisibility(View.GONE);
-        editNotebutton.setVisibility(View.VISIBLE);
     }
 
     public void changeToDetailsFragment(Note note) {
-        noteDetailsFragment = NoteDetailsFragment.newInstance(note.getTitle(), note.getContent(), note.getEdited());
+        noteDetailsFragment = NoteDetailsFragment.newInstance(note.getId(), note.getTitle(), note.getContent(), note.getEdited());
         fm.beginTransaction()
                 .replace(R.id.container, noteDetailsFragment, TAG_NOTE_DETAILS_FRAGMENT)
                 .addToBackStack(null)
