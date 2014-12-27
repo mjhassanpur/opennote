@@ -86,6 +86,7 @@ public class NoteListFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        activity.invalidateOptionsMenu();
     }
 
     @Override

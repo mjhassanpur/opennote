@@ -79,13 +79,14 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteEntry(Note note) {
+    public boolean deleteEntry(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(NoteEntry.TABLE_NAME,
+        boolean deleted = db.delete(NoteEntry.TABLE_NAME,
                 NoteEntry.KEY_ID + " = ?",
-                new String[] { String.valueOf(note.getId()) });
+                new String[] { String.valueOf(id) }) > 0;
 
         db.close();
+        return deleted;
     }
 
     public Note getEntry(int id) {

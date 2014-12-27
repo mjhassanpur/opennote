@@ -111,6 +111,9 @@ public class NoteDetailsFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        try {
+            ((MainActivity) activity).updateOptionsMenu();
+        } catch (NullPointerException e) { }
     }
 
     @Override
