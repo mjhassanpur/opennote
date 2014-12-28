@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity implements
 
     private final static String TAG_NOTE_LIST_FRAGMENT = "TAG_NOTE_LIST_FRAGMENT";
     private final static String TAG_NOTE_DETAILS_FRAGMENT = "TAG_NOTE_DETAILS_FRAGMENT";
+    private final static String TAG_MOVE_TO_TRASH_DIALOG_FRAGMENT = "TAG_MOVE_TO_TRASH_DIALOG_FRAGMENT";
 
     private Menu mOptionsMenu;
     private Toolbar toolbar;
@@ -86,7 +87,8 @@ public class MainActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_delete) {
             if (note != null) {
-                new DeleteNoteTask(note.getId()).execute();
+                MoveToTrashDialogFragment fragment = new MoveToTrashDialogFragment();
+                fragment.show(fm, TAG_MOVE_TO_TRASH_DIALOG_FRAGMENT);
             }
             return true;
         } else if (id == R.id.action_share) {
@@ -99,6 +101,10 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onFragmentInteraction(Uri uri) { }
+
+    public void deleteNote() {
+        new DeleteNoteTask(note.getId()).execute();
+    }
 
     public void shareNote() {
         try {
