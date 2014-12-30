@@ -22,7 +22,7 @@ import java.util.List;
 public class NoteListFragment extends Fragment {
 
     private ListView lv;
-    private List<Note> notes;
+    private List<NoteItem> notes;
     private NoteListAdapter adapter;
     private NoteDBHelper noteDBHelper;
     private FloatingActionButton createNotebutton;
@@ -62,8 +62,8 @@ public class NoteListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-                Note note = notes.get(position);
-                ((MainActivity) getActivity()).changeToDetailsFragment(note);
+                NoteItem note = notes.get(position);
+                ((MainActivity) getActivity()).changeToDetailsFragment((Note) note);
             }
         });
         noteDBHelper = new NoteDBHelper(getActivity());

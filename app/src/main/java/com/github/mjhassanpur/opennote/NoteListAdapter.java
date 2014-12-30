@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class NoteListAdapter extends ArrayAdapter<Note> {
+public class NoteListAdapter extends ArrayAdapter<NoteItem> {
 
-    public NoteListAdapter(Context context, List<Note> notes) {
+    public NoteListAdapter(Context context, List<NoteItem> notes) {
         super(context, 0, notes);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Note note = getItem(position);
+        NoteItem note = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
         }

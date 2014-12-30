@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 
-public class Note {
+public class Note implements NoteItem {
 
     private int id;
     private String title;

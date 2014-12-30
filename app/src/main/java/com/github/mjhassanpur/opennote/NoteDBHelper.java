@@ -107,12 +107,12 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         return note;
     }
 
-    public List<Note> getAllEntries() {
+    public List<NoteItem> getAllEntries() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + NoteEntry.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
 
-        List<Note> notes = new LinkedList<Note>();
+        List<NoteItem> notes = new LinkedList<NoteItem>();
 
         Note note;
         if (cursor.moveToFirst()) {
