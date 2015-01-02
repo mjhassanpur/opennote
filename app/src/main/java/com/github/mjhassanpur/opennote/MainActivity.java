@@ -11,10 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements
         NoteListFragment.OnFragmentInteractionListener,
@@ -177,6 +174,8 @@ public class MainActivity extends ActionBarActivity implements
         protected void onPostExecute(Void v) {
             if (deleted) {
                 note = null;
+                Toast.makeText(MainActivity.this, "Note deleted",
+                        Toast.LENGTH_LONG).show();
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(i);
             }
