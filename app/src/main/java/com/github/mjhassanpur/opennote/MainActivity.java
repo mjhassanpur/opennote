@@ -100,7 +100,9 @@ public class MainActivity extends ActionBarActivity implements
     public void onFragmentInteraction(Uri uri) { }
 
     public void deleteNote() {
-        new DeleteNoteTask(note.getId()).execute();
+        if (note != null) {
+            new DeleteNoteTask(note.getId()).execute();
+        }
     }
 
     public void shareNote() {
