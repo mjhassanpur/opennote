@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/add_note"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:gravity="start"
         android:textColor="@color/text_color"
         android:textCursorDrawable="@drawable/color_cursor"

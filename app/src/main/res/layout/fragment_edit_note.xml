@@ -26,7 +26,7 @@
         android:id="@+id/edit_note_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:gravity="start"
         android:textColor="@color/text_color"
         android:textCursorDrawable="@drawable/color_cursor"

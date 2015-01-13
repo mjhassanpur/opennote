@@ -15,7 +15,7 @@ import com.github.mjhassanpur.opennote.NoteDBContract.NoteEntry;
 
 public class NoteDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "note.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
