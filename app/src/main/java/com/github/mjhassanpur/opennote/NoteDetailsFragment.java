@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -71,11 +72,11 @@ public class NoteDetailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_note_details, container, false);
         TextView tvTitle = (TextView) v.findViewById(R.id.title);
         TextView tvContent = (TextView) v.findViewById(R.id.content);
-        TextView tvEdited = (TextView) v.findViewById(R.id.edited);
+        TextView tvEdited = (TextView) v.findViewById(R.id.edited_date);
         tvTitle.setText(mTitle);
         tvContent.setText(mContent);
         Date date = new Date(mEdited);
-        DateFormat df = DateFormat.getDateTimeInstance();
+        DateFormat df = new SimpleDateFormat("MMM dd, yyyy '@' hh:mm aa");
         tvEdited.setText(df.format(date));
 
         editNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_edit_note);

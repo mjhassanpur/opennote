@@ -11,6 +11,7 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="edited">Edited</string>
+    <string name="last_edited">Last edited: </string>
     <string name="done">DONE</string>
 
 </resources>
