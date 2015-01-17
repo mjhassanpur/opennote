@@ -6,27 +6,31 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 import com.github.mjhassanpur.opennote.NoteDBContract.NoteEntry;
 
 
 public class NoteDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "note.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
+    public static final String STR_SEP = "__,__";
     private static final String SQL_CREATE_NOTE_ENTRIES =
             "CREATE TABLE " + NoteEntry.TABLE_NAME + " (" +
                     NoteEntry.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NoteEntry.KEY_TITLE + TEXT_TYPE + COMMA_SEP +
                     NoteEntry.KEY_CONTENT + TEXT_TYPE + COMMA_SEP +
                     NoteEntry.KEY_CREATED + INTEGER_TYPE + COMMA_SEP +
-                    NoteEntry.KEY_EDITED + INTEGER_TYPE +
+                    NoteEntry.KEY_EDITED + INTEGER_TYPE + COMMA_SEP +
+                    NoteEntry.KEY_TAGS + TEXT_TYPE +
             ")";
 
     private static final String SQL_DELETE_NOTE_ENTRIES =
@@ -55,6 +59,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         values.put(NoteEntry.KEY_CONTENT, note.getContent());
         values.put(NoteEntry.KEY_CREATED, note.getCreated().getTime());
         values.put(NoteEntry.KEY_EDITED, note.getEdited().getTime());
+        values.put(NoteEntry.KEY_TAGS, convertArrayListToString(note.getTags()));
 
         db.insert(NoteEntry.TABLE_NAME,
                 null,
@@ -70,6 +75,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
         values.put(NoteEntry.KEY_TITLE, note.getTitle());
         values.put(NoteEntry.KEY_CONTENT, note.getContent());
         values.put(NoteEntry.KEY_EDITED, note.getEdited().getTime());
+        values.put(NoteEntry.KEY_TAGS, convertArrayListToString(note.getTags()));
 
         db.update(NoteEntry.TABLE_NAME,
                 values,
@@ -102,6 +108,7 @@ public class NoteDBHelper extends SQLiteOpenHelper {
             note.setContent(cursor.getString(2));
             note.setCreated(new Date(cursor.getLong(3)));
             note.setEdited(new Date(cursor.getLong(4)));
+            note.setTags(convertStringToArrayList(cursor.getString(5)));
         }
 
         return note;
@@ -123,11 +130,29 @@ public class NoteDBHelper extends SQLiteOpenHelper {
                 note.setContent(cursor.getString(2));
                 note.setCreated(new Date(cursor.getLong(3)));
                 note.setEdited(new Date(cursor.getLong(4)));
+                note.setTags(convertStringToArrayList(cursor.getString(5)));
                 notes.add(note);
             } while (cursor.moveToNext());
         }
 
         return notes;
+    }
+
+    public static String convertArrayListToString(ArrayList<String> arrayList) {
+        String str = "";
+        for (int i = 0, n = arrayList.size(); i < n; i++) {
+            str = str + arrayList.get(i);
+            if (i < n-1) {
+                str = str + STR_SEP;
+            }
+        }
+        return str;
+    }
+
+    public static ArrayList<String> convertStringToArrayList(String str) {
+        String[] arr = str.split(STR_SEP);
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(arr));
+        return arrayList;
     }
 
 }

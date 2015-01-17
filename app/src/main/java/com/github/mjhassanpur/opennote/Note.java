@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Note implements NoteItem {
@@ -24,6 +25,7 @@ public class Note implements NoteItem {
         this.title = "Note - " + df.format(this.created);
         this.content = "Nothing...";
         this.tags = new ArrayList<String>();
+        this.tags.add("");
     }
 
     public void setId(int id) {
@@ -68,6 +70,10 @@ public class Note implements NoteItem {
 
     public ArrayList<String> getTags() {
         return this.tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        Collections.copy(this.tags, tags);
     }
 
     public void addTag(String tag) {

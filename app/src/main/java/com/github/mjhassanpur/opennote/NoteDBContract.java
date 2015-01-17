@@ -14,5 +14,6 @@ public final class NoteDBContract {
         public static final String KEY_CONTENT = "content";
         public static final String KEY_CREATED = "created";
         public static final String KEY_EDITED = "edited";
+        public static final String KEY_TAGS = "tags";
     }
 }
