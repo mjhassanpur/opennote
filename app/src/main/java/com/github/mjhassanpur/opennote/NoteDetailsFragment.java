@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -15,6 +16,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 
 public class NoteDetailsFragment extends Fragment {
@@ -23,10 +25,12 @@ public class NoteDetailsFragment extends Fragment {
     private static final String NOTE_TITLE = "title";
     private static final String NOTE_CONTENT = "content";
     private static final String NOTE_EDITED = "edited";
+    private static final String NOTE_TAGS = "tags";
     private int mId;
     private String mTitle;
     private String mContent;
     private Long mEdited;
+    private ArrayList<String> mTags;
 
     private FloatingActionButton editNotebutton;
 
@@ -40,13 +44,14 @@ public class NoteDetailsFragment extends Fragment {
      * @param content Note content
      * @return A new instance of fragment NoteDetailsFragment.
      */
-    public static NoteDetailsFragment newInstance(int id, String title, String content, Date edited) {
+    public static NoteDetailsFragment newInstance(int id, String title, String content, Date edited, ArrayList<String> tags) {
         NoteDetailsFragment fragment = new NoteDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(NOTE_ID, id);
         args.putString(NOTE_TITLE, title);
         args.putString(NOTE_CONTENT, content);
         args.putLong(NOTE_EDITED, edited.getTime());
+        args.putStringArrayList(NOTE_TAGS, tags);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,6 +68,7 @@ public class NoteDetailsFragment extends Fragment {
             mTitle = getArguments().getString(NOTE_TITLE);
             mContent = getArguments().getString(NOTE_CONTENT);
             mEdited = getArguments().getLong(NOTE_EDITED);
+            mTags = getArguments().getStringArrayList(NOTE_TAGS);
         }
     }
 
@@ -73,11 +79,25 @@ public class NoteDetailsFragment extends Fragment {
         TextView tvTitle = (TextView) v.findViewById(R.id.title);
         TextView tvContent = (TextView) v.findViewById(R.id.content);
         TextView tvEdited = (TextView) v.findViewById(R.id.edited_date);
+        TextView tvTags = (TextView) v.findViewById(R.id.tags);
+        ImageView ivTags = (ImageView) v.findViewById(R.id.tag_icon);
         tvTitle.setText(mTitle);
         tvContent.setText(mContent);
         Date date = new Date(mEdited);
         DateFormat df = new SimpleDateFormat("MMM dd, yyyy '@' hh:mm aa");
         tvEdited.setText(df.format(date));
+        if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
+            for (int i = 0, n = mTags.size(); i < n; i++) {
+                if (i == 0) {
+                    tvTags.setText(mTags.get(i));
+                } else {
+                    tvTags.append(", " + mTags.get(i));
+                }
+            }
+        } else {
+            ivTags.setVisibility(View.GONE);
+            tvTags.setVisibility(View.GONE);
+        }
 
         editNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_edit_note);
         editNotebutton.setOnClickListener(new View.OnClickListener() {

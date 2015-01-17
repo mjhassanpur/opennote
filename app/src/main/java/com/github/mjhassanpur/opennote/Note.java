@@ -25,7 +25,7 @@ public class Note implements NoteItem {
         this.title = "Note - " + df.format(this.created);
         this.content = "Nothing...";
         this.tags = new ArrayList<String>();
-        this.tags.add("");
+        this.tags.add(0, "test");
     }
 
     public void setId(int id) {

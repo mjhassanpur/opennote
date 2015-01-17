@@ -126,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void changeToDetailsFragment(Note note) {
-        noteDetailsFragment = NoteDetailsFragment.newInstance(note.getId(), note.getTitle(), note.getContent(), note.getEdited());
+        noteDetailsFragment = NoteDetailsFragment.newInstance(note.getId(), note.getTitle(), note.getContent(), note.getEdited(), note.getTags());
         fm.beginTransaction()
                 .replace(R.id.container, noteDetailsFragment, TAG_NOTE_DETAILS_FRAGMENT)
                 .addToBackStack(null)
