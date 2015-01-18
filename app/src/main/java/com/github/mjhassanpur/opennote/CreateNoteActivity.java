@@ -1,5 +1,7 @@
 package com.github.mjhassanpur.opennote;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -33,6 +35,11 @@ public class CreateNoteActivity extends ActionBarActivity implements CreateNoteF
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_save) {
+            FragmentManager fm = getFragmentManager();
+            Fragment cFragment = fm.findFragmentById(R.id.create_note_fragment);
+            ((CreateNoteFragment) cFragment).onSavePressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

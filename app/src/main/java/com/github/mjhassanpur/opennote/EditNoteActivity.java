@@ -1,5 +1,7 @@
 package com.github.mjhassanpur.opennote;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,7 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class EditNoteActivity extends ActionBarActivity implements EditNoteFragment.OnFragmentInteractionListener {
+public class EditNoteActivity extends ActionBarActivity
+        implements EditNoteFragment.OnFragmentInteractionListener {
 
     private static final String NOTE_ID = "id";
     private static final String NOTE_TITLE = "title";
@@ -43,6 +46,11 @@ public class EditNoteActivity extends ActionBarActivity implements EditNoteFragm
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_save) {
+            FragmentManager fm = getFragmentManager();
+            Fragment cFragment = fm.findFragmentById(R.id.edit_note_fragment);
+            ((EditNoteFragment) cFragment).onSavePressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

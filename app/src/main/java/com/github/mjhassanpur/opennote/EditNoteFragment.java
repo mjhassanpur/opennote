@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Button;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ public class EditNoteFragment extends Fragment {
 
     private EditText editTitle;
     private EditText editContent;
-    private Button button;
     private NoteDBHelper noteDBHelper;
 
     /**
@@ -56,7 +54,6 @@ public class EditNoteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_edit_note, container, false);
         editTitle = (EditText) v.findViewById(R.id.edit_note_title);
         editContent = (EditText) v.findViewById(R.id.edit_note_content);
-        button = (Button) v.findViewById(R.id.done_button);
         return v;
     }
 
@@ -73,35 +70,31 @@ public class EditNoteFragment extends Fragment {
         editTitle.setSelection(editTitle.getText().length());
         if (editContent != null) {
             editContent.setHorizontallyScrolling(false);
-            editContent.setLines(5);
             editContent.setText(mContent);
             editContent.setSelection(editContent.getText().length());
         }
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Note note = new Note();
-                note.setId(mId);
-                String editTitleText = editTitle.getText().toString();
-                if (editTitleText != null && !editTitleText.isEmpty()) {
-                    note.setTitle(editTitle.getText().toString());
-                }
-                String editContentText = editContent.getText().toString();
-                if (editContentText != null && !editContentText.isEmpty()) {
-                    note.setContent(editContent.getText().toString());
-                } else {
-                    note.setContent(mContent);
-                    Toast.makeText(getActivity(), "Cannot save an empty note",
-                            Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(getActivity(), MainActivity.class);
-                    startActivity(i);
-                    return;
-                }
-                noteDBHelper = new NoteDBHelper(getActivity());
-                new UpdateNoteTask(note).execute();
-            }
-        });
+    public void onSavePressed() {
+        Note note = new Note();
+        note.setId(mId);
+        String editTitleText = editTitle.getText().toString();
+        if (editTitleText != null && !editTitleText.isEmpty()) {
+            note.setTitle(editTitle.getText().toString());
+        }
+        String editContentText = editContent.getText().toString();
+        if (editContentText != null && !editContentText.isEmpty()) {
+            note.setContent(editContent.getText().toString());
+        } else {
+            note.setContent(mContent);
+            Toast.makeText(getActivity(), "Cannot save an empty note",
+                    Toast.LENGTH_LONG).show();
+            Intent i = new Intent(getActivity(), MainActivity.class);
+            startActivity(i);
+            return;
+        }
+        noteDBHelper = new NoteDBHelper(getActivity());
+        new UpdateNoteTask(note).execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
