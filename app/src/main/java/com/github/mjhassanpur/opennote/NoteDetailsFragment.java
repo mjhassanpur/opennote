@@ -78,15 +78,15 @@ public class NoteDetailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_note_details, container, false);
         TextView tvTitle = (TextView) v.findViewById(R.id.title);
         TextView tvContent = (TextView) v.findViewById(R.id.content);
-        TextView tvEdited = (TextView) v.findViewById(R.id.edited_date);
-        TextView tvTags = (TextView) v.findViewById(R.id.tags);
+        //TextView tvEdited = (TextView) v.findViewById(R.id.edited_date);
+        //TextView tvTags = (TextView) v.findViewById(R.id.tags);
         ImageView ivTags = (ImageView) v.findViewById(R.id.tag_icon);
         tvTitle.setText(mTitle);
         tvContent.setText(mContent);
-        Date date = new Date(mEdited);
+        /*Date date = new Date(mEdited);
         DateFormat df = new SimpleDateFormat("MMM dd, yyyy '@' hh:mm aa");
-        tvEdited.setText(df.format(date));
-        if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
+        tvEdited.setText(df.format(date));*/
+        /*if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
             for (int i = 0, n = mTags.size(); i < n; i++) {
                 if (i == 0) {
                     tvTags.setText(mTags.get(i));
@@ -97,7 +97,7 @@ public class NoteDetailsFragment extends Fragment {
         } else {
             ivTags.setVisibility(View.GONE);
             tvTags.setVisibility(View.GONE);
-        }
+        }*/
 
         editNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_edit_note);
         editNotebutton.setOnClickListener(new View.OnClickListener() {

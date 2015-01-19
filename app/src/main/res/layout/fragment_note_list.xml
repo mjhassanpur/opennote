@@ -26,6 +26,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
         lib:fab_colorNormal="@color/secondary"
-        lib:fab_colorPressed="@color/primary"/>
+        lib:fab_colorPressed="@color/secondary_dark"/>
 
 </RelativeLayout>
