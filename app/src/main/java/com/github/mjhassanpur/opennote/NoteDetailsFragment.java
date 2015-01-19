@@ -86,18 +86,11 @@ public class NoteDetailsFragment extends Fragment {
         /*Date date = new Date(mEdited);
         DateFormat df = new SimpleDateFormat("MMM dd, yyyy '@' hh:mm aa");
         tvEdited.setText(df.format(date));*/
-        /*if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
-            for (int i = 0, n = mTags.size(); i < n; i++) {
-                if (i == 0) {
-                    tvTags.setText(mTags.get(i));
-                } else {
-                    tvTags.append(", " + mTags.get(i));
-                }
-            }
+        if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
+            ivTags.setImageResource(R.drawable.ic_tag_teal_72);
         } else {
-            ivTags.setVisibility(View.GONE);
-            tvTags.setVisibility(View.GONE);
-        }*/
+            ivTags.setImageResource(R.drawable.ic_tag_grey_72);
+        }
 
         editNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_edit_note);
         editNotebutton.setOnClickListener(new View.OnClickListener() {
