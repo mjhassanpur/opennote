@@ -17,7 +17,7 @@ import com.github.mjhassanpur.opennote.NoteDBContract.NoteEntry;
 
 public class NoteDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "note.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
@@ -43,6 +43,19 @@ public class NoteDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_NOTE_ENTRIES);
+        ContentValues values = new ContentValues();
+        Note note = new Note();
+        note.setTitle("Welcome to OpenNote!");
+        note.setContent("The easiest way to take and store all your important notes!");
+        values.put(NoteEntry.KEY_TITLE, note.getTitle());
+        values.put(NoteEntry.KEY_CONTENT, note.getContent());
+        values.put(NoteEntry.KEY_CREATED, note.getCreated().getTime());
+        values.put(NoteEntry.KEY_EDITED, note.getEdited().getTime());
+        values.put(NoteEntry.KEY_TAGS, convertArrayListToString(note.getTags()));
+
+        db.insert(NoteEntry.TABLE_NAME,
+                null,
+                values);
     }
 
     @Override
