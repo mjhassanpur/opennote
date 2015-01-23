@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 public class MainActivity extends ActionBarActivity implements
         NoteListFragment.OnFragmentInteractionListener,
         NoteDetailsFragment.OnFragmentInteractionListener {
@@ -83,10 +85,11 @@ public class MainActivity extends ActionBarActivity implements
             changeToListFragment();
             return true;
         } else if (id == R.id.action_delete) {
-            if (note != null) {
+            /*if (note != null) {
                 MoveToTrashDialogFragment fragment = new MoveToTrashDialogFragment();
                 fragment.show(fm, TAG_MOVE_TO_TRASH_DIALOG_FRAGMENT);
-            }
+            }*/
+            showTrashDialog();
             return true;
         } else if (id == R.id.action_share) {
             shareNote();
@@ -182,5 +185,20 @@ public class MainActivity extends ActionBarActivity implements
                 startActivity(i);
             }
         }
+    }
+
+    private void showTrashDialog() {
+        new MaterialDialog.Builder(this)
+                .content("Move to trash?")
+                .positiveText("Yes")
+                .negativeText("No")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        deleteNote();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

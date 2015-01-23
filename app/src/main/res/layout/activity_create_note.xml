@@ -19,7 +19,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="@dimen/toolbar_dropshadow_height"
             android:background="@drawable/toolbar_dropshadow" />
     </FrameLayout>
 
