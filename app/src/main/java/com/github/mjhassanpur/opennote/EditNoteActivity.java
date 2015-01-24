@@ -10,8 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class EditNoteActivity extends ActionBarActivity
-        implements EditNoteFragment.OnFragmentInteractionListener {
+public class EditNoteActivity extends ActionBarActivity implements
+        EditNoteFragment.OnFragmentInteractionListener,
+        OptionsBarFragment.OnFragmentInteractionListener {
 
     private static final String NOTE_ID = "id";
     private static final String NOTE_TITLE = "title";

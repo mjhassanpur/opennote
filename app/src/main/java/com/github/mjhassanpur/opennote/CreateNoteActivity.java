@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class CreateNoteActivity extends ActionBarActivity implements CreateNoteFragment.OnFragmentInteractionListener {
+public class CreateNoteActivity extends ActionBarActivity implements
+        CreateNoteFragment.OnFragmentInteractionListener,
+        OptionsBarFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
 

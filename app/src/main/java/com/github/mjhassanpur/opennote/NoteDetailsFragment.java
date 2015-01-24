@@ -78,17 +78,17 @@ public class NoteDetailsFragment extends Fragment {
         TextView tvContent = (TextView) v.findViewById(R.id.content);
         //TextView tvEdited = (TextView) v.findViewById(R.id.edited_date);
         //TextView tvTags = (TextView) v.findViewById(R.id.tags);
-        ImageView ivTags = (ImageView) v.findViewById(R.id.tag_icon);
+        //ImageView ivTags = (ImageView) v.findViewById(R.id.tag_icon);
         tvTitle.setText(mTitle);
         tvContent.setText(mContent);
         /*Date date = new Date(mEdited);
         DateFormat df = new SimpleDateFormat("MMM dd, yyyy '@' hh:mm aa");
         tvEdited.setText(df.format(date));*/
-        if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
+        /*if (!mTags.isEmpty() && !mTags.get(0).equals("")) {
             ivTags.setImageResource(R.drawable.ic_tag_teal_72);
         } else {
             ivTags.setImageResource(R.drawable.ic_tag_grey_72);
-        }
+        }*/
 
         editNotebutton = (FloatingActionButton) v.findViewById(R.id.normal_edit_note);
         editNotebutton.setOnClickListener(new View.OnClickListener() {

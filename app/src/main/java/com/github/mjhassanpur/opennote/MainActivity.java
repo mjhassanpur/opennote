@@ -11,13 +11,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 public class MainActivity extends ActionBarActivity implements
         NoteListFragment.OnFragmentInteractionListener,
-        NoteDetailsFragment.OnFragmentInteractionListener {
+        NoteDetailsFragment.OnFragmentInteractionListener,
+        OptionsBarFragment.OnFragmentInteractionListener {
 
     private final static String TAG_NOTE_LIST_FRAGMENT = "TAG_NOTE_LIST_FRAGMENT";
     private final static String TAG_NOTE_DETAILS_FRAGMENT = "TAG_NOTE_DETAILS_FRAGMENT";
@@ -27,6 +30,7 @@ public class MainActivity extends ActionBarActivity implements
     private Toolbar toolbar;
     private NoteListFragment noteListFragment;
     private NoteDetailsFragment noteDetailsFragment;
+    private FrameLayout optionsBarContainer;
     private FragmentManager fm;
     private Note note;
     private NoteDBHelper noteDBHelper;
@@ -40,11 +44,13 @@ public class MainActivity extends ActionBarActivity implements
         setSupportActionBar(toolbar);
 
         fm = getFragmentManager();
-        Fragment cFragment = fm.findFragmentById(R.id.container);
-        if (cFragment == null || cFragment.getClass().equals(NoteListFragment.class)) {
+        Fragment mainFragment = fm.findFragmentById(R.id.main_container);
+        if (mainFragment == null || mainFragment.getClass().equals(NoteListFragment.class)) {
+            optionsBarContainer = (FrameLayout) findViewById(R.id.options_container);
+            optionsBarContainer.setVisibility(View.GONE);
             noteListFragment = NoteListFragment.newInstance();
             fm.beginTransaction()
-                    .replace(R.id.container, noteListFragment, TAG_NOTE_LIST_FRAGMENT)
+                    .replace(R.id.main_container, noteListFragment, TAG_NOTE_LIST_FRAGMENT)
                     .commit();
             setDefaultActionBar();
         } else {
@@ -131,17 +137,19 @@ public class MainActivity extends ActionBarActivity implements
     public void changeToDetailsFragment(Note note) {
         noteDetailsFragment = NoteDetailsFragment.newInstance(note.getId(), note.getTitle(), note.getContent(), note.getEdited(), note.getTags());
         fm.beginTransaction()
-                .replace(R.id.container, noteDetailsFragment, TAG_NOTE_DETAILS_FRAGMENT)
+                .replace(R.id.main_container, noteDetailsFragment, TAG_NOTE_DETAILS_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
         this.note = note;
+        optionsBarContainer.setVisibility(View.VISIBLE);
         setAlternateActionBar();
     }
 
     public void changeToListFragment() {
+        optionsBarContainer.setVisibility(View.GONE);
         noteListFragment = NoteListFragment.newInstance();
         fm.beginTransaction()
-                .replace(R.id.container, noteListFragment, TAG_NOTE_LIST_FRAGMENT)
+                .replace(R.id.main_container, noteListFragment, TAG_NOTE_LIST_FRAGMENT)
                 .commit();
         note = null;
         setDefaultActionBar();
