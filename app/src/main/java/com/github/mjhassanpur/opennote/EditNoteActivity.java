@@ -31,6 +31,7 @@ public class EditNoteActivity extends ActionBarActivity implements
         title = getIntent().getExtras().getString("title");
         content = getIntent().getExtras().getString("content");
 
+        // Set up the toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
