@@ -132,7 +132,7 @@ public class EditNoteFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public void updateNote(Note note) {
+    private void updateNote(Note note) {
         if (note != null) {
             new UpdateNoteTask(note).execute();
         }

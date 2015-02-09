@@ -89,7 +89,7 @@ public class CreateNoteFragment extends Fragment {
             startActivity(i);
             return;
         }
-        new AddNoteTask(note).execute();
+        addNote(note);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -125,6 +125,12 @@ public class CreateNoteFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private void addNote(Note note) {
+        if (note != null) {
+            new AddNoteTask(note).execute();
+        }
     }
 
     private class AddNoteTask extends AsyncTask<Void, Void, Void> {

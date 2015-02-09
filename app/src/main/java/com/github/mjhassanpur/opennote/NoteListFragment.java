@@ -67,7 +67,7 @@ public class NoteListFragment extends Fragment {
             }
         });
         noteDBHelper = new NoteDBHelper(getActivity());
-        new GetNotesTask().execute();
+        getNotes();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,6 +104,10 @@ public class NoteListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    private void getNotes() {
+        new GetNotesTask().execute();
     }
 
     private class GetNotesTask extends AsyncTask<Void, Void, Void> {
